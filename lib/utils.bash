@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+[[ -n "${_UTILS_BASH_:-}" ]] && return 0
+export _UTILS_BASH_=1
+
 get_arch() {
 	local arch
 	arch=$(uname -m | tr '[:upper:]' '[:lower:]')
