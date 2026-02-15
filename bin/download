@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+ASDF_INSTALL_TYPE=${ASDF_INSTALL_TYPE:-version}
+TMPDIR=${TMPDIR:-/tmp}
+[ -n "${ASDF_INSTALL_VERSION:-}" ] || (>&2 echo 'Missing ASDF_INSTALL_VERSION' && exit 1)
+[ -n "${ASDF_DOWNLOAD_PATH:-}" ] || (>&2 echo 'Missing ASDF_DOWNLOAD_PATH' && exit 1)
+
+# shellcheck disable=SC1091
+source "$(dirname "$0")/../lib/utils.bash"
+
+download_workmux() {
+	local version="$1"
+	local download_path="$2"
+	local download_url
+	download_url="$(get_download_url "$version")"
+
+	mkdir -p "$download_path"
+
+	echo "Downloading workmux from ${download_url}"
+	curl -sSL "$download_url" -o "${download_path}/workmux.tar.gz"
+	tar xzf "${download_path}/workmux.tar.gz" -C "$download_path"
+	rm -f "${download_path}/workmux.tar.gz"
+}
+
+download_workmux "$ASDF_INSTALL_VERSION" "$ASDF_DOWNLOAD_PATH"

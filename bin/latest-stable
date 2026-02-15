@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+query="${1:-}"
+
+versions="$(dirname "$0")/list-all"
+
+if [ -n "$query" ]; then
+	"$versions" | tr ' ' '\n' | grep -E "^v?${query}" | tail -1 | sed 's/^v//'
+else
+	"$versions" | tr ' ' '\n' | tail -1 | sed 's/^v//'
+fi

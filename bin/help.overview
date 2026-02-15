@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+cat <<EOF
+workmux is a CLI tool that provides a terminal-based workspace manager.
+This plugin allows installing and managing workmux versions via asdf.
+EOF
