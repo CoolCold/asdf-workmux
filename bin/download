@@ -20,6 +20,12 @@ download_workmux() {
 
 	echo "Downloading workmux from ${download_url}"
 	curl -sSL "$download_url" -o "${download_path}/workmux.tar.gz"
+
+	if [ ! -s "${download_path}/workmux.tar.gz" ]; then
+		echo "Error: Downloaded file is empty or missing" >&2
+		exit 1
+	fi
+
 	tar xzf "${download_path}/workmux.tar.gz" -C "$download_path"
 	rm -f "${download_path}/workmux.tar.gz"
 }
